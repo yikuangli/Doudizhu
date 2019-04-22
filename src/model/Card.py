@@ -5,6 +5,7 @@ class Card:
     user2 = []
     user3 = []
     bottom = []
+    
     DECK_LENGTH = 54
     def __init__(self):
         self.deck = [i for i in range(53)]
@@ -12,8 +13,10 @@ class Card:
     def shuffle(self):
         random.shuffle(self.deck)
 
-    def convert_real_Value()
-    def types(self,cards):
+    def convert_real_Value():
+
+    def valid_move(self, ):
+        
 
 
 

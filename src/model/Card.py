@@ -149,13 +149,17 @@ class Card:
                 value[13 + c%53]
             else:
                 value[c//4] += 1
+        single = value
+        double = list(map(lambda x: 1 if x >=2 else 0, value))
+        triple = list(map(lambda x: 1 if x >=3 else 0, value))
+        quadraple = list(map(lambda x: 1 if x >=4 else 0, value))
         possible = {
             1:{},
             2:{},
             30:{},
             31:{},
             32:{},
-            4:{},
+            8:{},
             41:{},
             42:{},
             50:{},
@@ -203,7 +207,6 @@ class Card:
                         possible[31][v] = str(v)*3 + str(c)*2
             if v > 3:
                 possible[4][v] = str(v)*4 
-                for i in generate_all_possible(1,v,1,table):
 
                 
         dragon = [x/x for x in value[:-3]]
@@ -228,9 +231,10 @@ class Card:
                 if i - na >= 5:
                     d[5].append((na,i - na))
                 na = i + 1
-    def  generate_all_possible(number,exclude,type,table):
-        if type == 1:
-                        new = [if_exist(x,1/),]
+    def  generate_all_possible(exclude,t,table):
+            new  = [generate_helper(v,i,t,exclude) for i,v in enumerate(table)]
+            
+
     #     add_single(p_hand,possible)
     #     add_pair(value,possible)
     #     add_triofamily(value,possible)
@@ -238,8 +242,8 @@ class Card:
     #     add_dragon(value,possible)
     #     add_tuolaji(value,possible)
     #     add_airplane(value,possible)
-    def if_exist(v,t,ex):
-        if v >= t and not in ex:
+    def generate_helper(v,i,t,ex):
+        if v >= t and i not in ex:
             return 1
         else:
             return 0

@@ -18,7 +18,7 @@ class Card:
 
     def shuffle(self):
         random.shuffle(self.deck)
-
+ 
     def dial(self):
         self.user1 = self.deck[:17]
         self.user2 = self.deck[17:34]
@@ -143,6 +143,7 @@ class Card:
              
         
     def card_checking(cards):
+        draogon_checker = '34567890JQKA'
         value = [0 for x in range(14)]
         for c in cards:
             if c == 53 or c == 54:
@@ -153,52 +154,14 @@ class Card:
         double = list(map(lambda x: 1 if x >=2 else 0, value))
         triple = list(map(lambda x: 1 if x >=3 else 0, value))
         quadraple = list(map(lambda x: 1 if x >=4 else 0, value))
-        possible = {
-            1:{},
-            2:{},
-            30:{},
-            31:{},
-            32:{},
-            8:{},
-            41:{},
-            42:{},
-            50:{},
-            51:{},
-            52:{},
-            53:{},
-            54:{},
-            55:{},
-            56:{},
-            57:{},
-            60:{},
-            61:{},
-            62:{},
-            63:{},
-            64:{},
-            65:{},
-            66:{},
-            67:{},
-            700:{},
-            710:{},
-            720:{},
-            730:{},
-            740:{},
-            750:{},
-            701:{},
-            711:{},
-            721:{},
-            731:{},
-            702:{},
-            712:{},
-            722:{}
-            }
+    
         for i,v in enumerate(value):
             if v:
                 possible[1][v] = str(v)    
             if v > 1:
                 possible[2][v] = str(v)*2 
             if v > 2:
-                possible[30][v] = str(v)*3
+                possible[3][v] = str(v)*3
                 for c in value:
                     if c and c != v:
                         possible[31][v] = str(v)*3 + str(c)
@@ -207,9 +170,8 @@ class Card:
                         possible[31][v] = str(v)*3 + str(c)*2
             if v > 3:
                 possible[4][v] = str(v)*4 
-
                 
-        dragon = [x/x for x in value[:-3]]
+        dragon = value[:-2]
         dragon.append(0)
         tuolaji = [x-1/x-1 for x in value[:-3]]
         tuolaji.append(0)
@@ -223,74 +185,18 @@ class Card:
                 nd = i + 1
         for i,v in enumerate(tuolaji):
             if not v:
-                if i - nt >= 5:
-                    d[5].append((nt,i - nt))
+                if i - nt >= 3:
+                    d[6].append((nt,i - nt))
                 nt = i + 1
         for i,v in enumerate(airp):
             if not v:
-                if i - na >= 5:
+                if i - na >= 2:
                     d[5].append((na,i - na))
                 na = i + 1
-    def  generate_all_possible(exclude,t,table):
-            new  = [generate_helper(v,i,t,exclude) for i,v in enumerate(table)]
-            
 
-    #     add_single(p_hand,possible)
-    #     add_pair(value,possible)
-    #     add_triofamily(value,possible)
-    #     add_bombfamily(value,possible)
-    #     add_dragon(value,possible)
-    #     add_tuolaji(value,possible)
-    #     add_airplane(value,possible)
     def generate_helper(v,i,t,ex):
         if v >= t and i not in ex:
             return 1
         else:
             return 0
-
-        
-    # def add_single(h, d):
-    #     for d in d[1]:
-    #         h[str(d)] = (1,d)
-        
-    # def add_pair(h,d):
-    #     for d in d[2]:
-    #         h[str(d)*2] = (2,d)
-    # def add_triofamily(h,d):
-    #     for h in d[3]:
-    #         h[str(d)*3] = (30,d)
-    #         for s in d[1]:
-    #             if s != h
-    #             h[str(d)*3 + str(s)] = (31,d)
-
-
-    # def add_bombfamily(value,d):
-    #     for i,v in enumerate(value):
-            
-    # def add_dragon(value,d):
-    #     new = [x/x for x in value[:-3]]
-    #     new.append(0)
-    #     nullpoint = 0
-        
-    # def add_tuolaji(value,d):
-    #     new = [x-1/x-1 for x in value[:-3]]
-    #     new.append(0)
-    #     nullpoint = 0
-    #     for i,v in enumerate(value):
-    #         if not v:
-    #             if i - nullpoint >= 3:
-    #                 d[6].append((nullpoint,i - nullpoint))
-    #                 nullpoint = i + 1
-    
-    # def add_airplane(value,d):
-    #     new = [x-2/x-2 for x in value[:-3]]
-    #     new.append(0)
-    #     nullpoint = 0
-    #     for i,v in enumerate(value):
-    #         if not v:
-    #             if i - nullpoint >= 3:
-    #                 d[7].append((nullpoint,i - nullpoint))
-    #                 nullpoint = i + 1
-    
-
     def valid_move(self, card):
